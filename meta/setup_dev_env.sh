@@ -198,6 +198,26 @@ SSH
     echo ""
 }
 
+# === Claude Code ===
+configure_claude() {
+    step "Claude Code (env vars + CC alias)"
+    local zshrc="$HOME/.zshrc"
+
+    if grep -q 'alias CC=' "$zshrc" 2>/dev/null; then
+        info "Claude Code config already present, skipping"
+        return
+    fi
+
+    cat >> "$zshrc" << 'CLAUDE'
+
+# Claude Code
+export CLAUDE_CODE_VERSION_OVERRIDE=2.1.156
+export META_CLAUDE_EXPERIMENTAL_OPUS_FAST=1
+alias CC='claude --dangerously-skip-permissions --dangerously-enable-internet-mode'
+CLAUDE
+    info "Claude Code env vars + 'CC' alias added (run: CC)"
+}
+
 # === Default Shell ===
 set_default_shell() {
     step "Default Shell"
@@ -223,6 +243,7 @@ main() {
     configure_bashrc
     configure_git
     configure_ssh
+    configure_claude
     set_default_shell
 
     step "Done"

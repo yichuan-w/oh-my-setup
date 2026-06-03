@@ -91,3 +91,32 @@ Install Claude Code CLI:
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash
 ```
+
+### Configure Claude Code (env vars + `CC` alias)
+
+Add the following to your `~/.zshrc` so the experimental flags are set and a
+short `CC` command launches Claude Code with the flags you want:
+
+```bash
+# Claude Code
+export CLAUDE_CODE_VERSION_OVERRIDE=2.1.156
+export META_CLAUDE_EXPERIMENTAL_OPUS_FAST=1
+alias CC='claude --dangerously-skip-permissions --dangerously-enable-internet-mode'
+```
+
+Reload your shell so the changes take effect:
+```bash
+source ~/.zshrc
+```
+
+Now launch Claude Code with:
+```bash
+CC
+```
+
+| Setting | Purpose |
+| --- | --- |
+| `CLAUDE_CODE_VERSION_OVERRIDE=2.1.156` | Pin Claude Code to a specific version |
+| `META_CLAUDE_EXPERIMENTAL_OPUS_FAST=1` | Enable the experimental Opus fast mode |
+| `--dangerously-skip-permissions` | Skip per-action permission prompts |
+| `--dangerously-enable-internet-mode` | Allow Claude Code internet access |
